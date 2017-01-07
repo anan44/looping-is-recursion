@@ -27,17 +27,53 @@
 
 
 (defn find-first-index [pred a-seq]
-  ":(")
+ (loop [acc 0
+        se  a-seq]
+   (cond
+    (empty? se) nil
+    (pred (first se)) acc
+    :else (recur (inc acc) (rest se)))))
+
+
+(defn loopy-factorial [down-from]
+  (loop [acc 1 
+         n down-from]
+    (if (zero? n)
+      acc
+      (recur (* acc n) (dec n)))))
+
 
 (defn avg [a-seq]
-  -1)
+  (loop [co 0
+         sum 0
+         se a-seq]
+    (if (empty? se)
+      (/ sum co)
+      (recur (inc co) (+ sum (first se)) (rest se)))))
 
 (defn parity [a-seq]
-  ":(")
+  (loop [acc #{}
+         se a-seq]
+    (if (empty? se)
+      acc
+      (if (contains? acc (first se))
+        (recur (disj acc (first se)) (rest se))
+        (recur (conj acc (first se)) (rest se))))))
 
 (defn fast-fibo [n]
-  ":(")
+  (loop [acc 0
+         acc2 1
+         fib n]
+    (if (zero? fib)
+      acc
+      (recur acc2 (+ acc2 acc) (dec fib)))))
 
 (defn cut-at-repetition [a-seq]
-  [":("])
+  (loop [acc []
+         se a-seq]
+    (cond
+     (contains? (set acc) (first se)) acc
+     (empty? se) acc
+     :else (recur (conj acc (first se)) (rest se)))))
+
 
